@@ -7,7 +7,7 @@
             <p class="text-xl">A list of upcoming farming contests.</p>
             <div class="text-gray-700">
                 Data is manually collected.
-                <a href="https://github.com/matcool" class="italic"
+                <a href="https://github.com/matcool/skyblock-jacob" class="italic"
                     >Source code</a
                 >
             </div>
