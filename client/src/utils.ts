@@ -9,9 +9,6 @@ export function formatTime(millis: number): string {
 
 export function enumNames(enum_: any): string[] {
     return Object.keys(enum_).filter(
-        (k) =>
-            typeof enum_[k] === 'number' ||
-            enum_[k] === k ||
-            enum_[enum_[k]]?.toString() !== k
+        (k) => typeof enum_[k] === 'number' || enum_[k] === k || enum_[enum_[k]]?.toString() !== k
     );
 }

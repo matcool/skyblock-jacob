@@ -7,9 +7,7 @@
             'bg-yellow-200': !active && soon,
         }"
     >
-        <p class="text-lg mb-1">
-            {{ active ? 'Ends' : 'Starts' }} in: {{ timer }}
-        </p>
+        <p class="text-lg mb-1">{{ active ? 'Ends' : 'Starts' }} in: {{ timer }}</p>
         <div class="flex justify-around">
             <img
                 v-for="(crop, i) in event.crops"
@@ -43,10 +41,7 @@ export default defineComponent({
         }
         const diff = ref(props.event.timestamp - Date.now());
         const active = computed(() => diff.value < 0);
-        setInterval(
-            () => (diff.value = props.event.timestamp - Date.now()),
-            1000
-        );
+        setInterval(() => (diff.value = props.event.timestamp - Date.now()), 1000);
         watchEffect(() => {
             if (diff.value < -20 * 60 * 1000) {
                 ctx.emit('event-over');
@@ -54,18 +49,12 @@ export default defineComponent({
         });
 
         const timer = computed(() => {
-            return formatTime(
-                active.value ? 20 * 60 * 1000 + diff.value : diff.value
-            );
+            return formatTime(active.value ? 20 * 60 * 1000 + diff.value : diff.value);
         });
         // in 5 minutes
-        const soon = computed(
-            () => !active.value && diff.value < 5 * 60 * 1000 && !verySoon.value
-        );
+        const soon = computed(() => !active.value && diff.value < 5 * 60 * 1000 && !verySoon.value);
         // in 1 minute
-        const verySoon = computed(
-            () => !active.value && diff.value < 60 * 1000
-        );
+        const verySoon = computed(() => !active.value && diff.value < 60 * 1000);
         return {
             Crop,
             assetFromCrop,

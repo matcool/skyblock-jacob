@@ -1,22 +1,18 @@
 <template>
     <div class="flex justify-center">
         <div class="flex flex-col items-center">
-            <h1 class="mt-2 text-4xl font-semibold">
-                Jacob's Farming Contests
-            </h1>
+            <h1 class="mt-2 text-4xl font-semibold">Jacob's Farming Contests</h1>
             <p class="text-xl">A list of upcoming farming contests.</p>
             <div class="text-gray-700">
                 Data is manually collected.
-                <a href="https://github.com/matcool/skyblock-jacob" class="italic"
-                    >Source code</a
-                >
+                <a href="https://github.com/matcool/skyblock-jacob" class="italic">Source code</a>
             </div>
-            <div class="bg-gray-200 flex p-2 gap-2 rounded-lg mt-2 select-none">
+            <div class="bg-gray-200 flex p-2 rounded-lg mt-2 select-none">
                 <div
                     v-for="(name, i) in cropNames"
                     :key="i"
                     @click="selected[i] = !selected[i]"
-                    class="px-2 py-1 rounded-lg cursor-pointer"
+                    class="px-2 py-1 rounded-lg cursor-pointer mx-1"
                     :class="{
                         'bg-white': !selected[i],
                         'bg-indigo-200': selected[i],
@@ -28,7 +24,7 @@
             <event-card
                 v-for="(event, i) in filteredEvents"
                 :event="event"
-                :key="i"
+                :key="event.timestamp"
                 @event-over="events.splice(i, 1)"
             ></event-card>
         </div>
