@@ -14,7 +14,7 @@ if (fs.existsSync('../client/dist')) {
 }
 
 app.get('/api/upcomingEvents', async (req, res) => {
-    const upcomingEvents = await events.find({ timestamp: { $gt: Date.now() - 21 * 60 * 1000 } }, {sort: {timestamp: 1}});
+    const upcomingEvents = await events.find({ timestamp: { $gt: Date.now() - 21 * 60 * 1000 } }, {sort: {timestamp: 1}, fields: {_id: 0}});
     res.send(upcomingEvents)
 });
 
