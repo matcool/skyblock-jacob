@@ -7,12 +7,12 @@
                 Contest data is manually collected.
                 <a href="https://github.com/matcool/skyblock-jacob" class="italic">Source code</a>
             </div>
-            <div class="bg-gray-200 flex p-2 rounded-lg mt-2 select-none">
+            <div class="bg-gray-200 flex flex-wrap p-2 rounded-lg mt-2 select-none">
                 <div
                     v-for="(name, i) in cropNames"
                     :key="i"
                     @click="selected[i] = !selected[i]"
-                    class="px-2 py-1 rounded-lg cursor-pointer mx-1"
+                    class="px-2 py-1 rounded-lg cursor-pointer mx-1 my-1 md:my-0"
                     :class="{
                         'bg-white': !selected[i],
                         'bg-indigo-200': selected[i],
