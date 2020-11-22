@@ -4,7 +4,7 @@
             <h1 class="mt-2 text-4xl font-semibold">Jacob's Farming Contests</h1>
             <p class="text-xl">A list of upcoming farming contests.</p>
             <div class="text-gray-700">
-                Data is manually collected.
+                Contest data is manually collected.
                 <a href="https://github.com/matcool/skyblock-jacob" class="italic">Source code</a>
             </div>
             <div class="bg-gray-200 flex p-2 rounded-lg mt-2 select-none">
