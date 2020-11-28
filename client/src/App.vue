@@ -5,7 +5,9 @@
             <p class="text-xl">A list of upcoming farming contests.</p>
             <div class="text-gray-700">
                 Contest data is manually collected.
-                <a href="https://github.com/matcool/skyblock-jacob" class="italic">Source code</a>
+                <a href="https://github.com/matcool/skyblock-jacob" class="italic hover:underline"
+                    >Source code</a
+                >
             </div>
             <div class="bg-gray-200 flex flex-wrap p-2 rounded-lg mt-2 select-none">
                 <div
@@ -27,6 +29,14 @@
                 :key="event.timestamp"
                 @event-over="events.splice(i, 1)"
             ></event-card>
+            <div v-if="events.length === 0" class="mt-5 text-xl text-gray-700 italic">
+                Uh oh, the API returned no events. If this persists, go complain in the
+                <a
+                    class="hover:underline text-gray-900"
+                    href="https://hypixel.net/threads/website-jacobs-farming-contests-tracker.3562658/"
+                    >forum thread</a
+                >
+            </div>
         </div>
     </div>
 </template>
