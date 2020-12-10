@@ -9,6 +9,10 @@
                     >Source code</a
                 >
             </div>
+            <div class="flex items-center text-lg my-2">
+                <input type="checkbox" class="w-4 h-4" v-model="notifsEnabled" />
+                <span class="ml-2">Enable notifications</span>
+            </div>
             <div class="bg-gray-200 flex flex-wrap p-2 rounded-lg mt-2 select-none">
                 <div
                     v-for="(name, i) in cropNames"
@@ -42,11 +46,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, ref } from 'vue';
+import { defineComponent, reactive, computed, ref, watchEffect } from 'vue';
 import EventCard from './components/EventCard.vue';
 import { JacobEvent, Crop } from './types';
 import axios from 'axios';
-import { enumNames } from './utils';
+import { cropNames } from './utils';
+import { notifsEnabled } from './notifications';
 
 export default defineComponent({
     components: {
@@ -57,18 +62,6 @@ export default defineComponent({
         axios.get('/api/upcomingEvents').then((response) => {
             events.push(...response.data);
         });
-        const cropNames = reactive([
-            'Cactus',
-            'Carrot',
-            'Cocoa beans',
-            'Melon',
-            'Mushroom',
-            'Nether wart',
-            'Potato',
-            'Pumpkin',
-            'Sugar cane',
-            'Wheat',
-        ]);
         const selected = reactive(Array(cropNames.length).fill(false));
         const filteredEvents = computed(() => {
             // if nothing is selected, then ignore
@@ -84,6 +77,7 @@ export default defineComponent({
             filteredEvents,
             cropNames,
             selected,
+            notifsEnabled,
         };
     },
 });

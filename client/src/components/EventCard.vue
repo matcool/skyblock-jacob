@@ -23,8 +23,9 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, computed, watchEffect } from 'vue';
 import { JacobEvent, Crop } from '../types';
-import { formatTime } from '../utils';
+import { formatTime, cropNames } from '../utils';
 import icons from '../icons';
+import { notifsEnabled } from '../notifications';
 
 export default defineComponent({
     name: 'EventCard',
@@ -41,10 +42,26 @@ export default defineComponent({
         }
         const diff = ref(props.event.timestamp - Date.now());
         const active = computed(() => diff.value < 0);
-        setInterval(() => (diff.value = props.event.timestamp - Date.now()), 1000);
+        setInterval(() => {
+            diff.value = props.event.timestamp - Date.now();
+        }, 1000);
+        let sentNotification = ref(false);
         watchEffect(() => {
             if (diff.value < -20 * 60 * 1000) {
                 ctx.emit('event-over');
+            } else if (
+                !active.value &&
+                diff.value < 3 * 60 * 1000 &&
+                notifsEnabled.value &&
+                !sentNotification.value
+            ) {
+                // maybe change to 5 minutes so it matches with the other one idk
+                sentNotification.value = true;
+                new Notification('A contest is about to start!', {
+                    body: `In less than 3 minutes. Crops: ${props.event.crops
+                        .map((_, i) => cropNames[i])
+                        .join(', ')}`,
+                });
             }
         });
 

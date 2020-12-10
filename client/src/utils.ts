@@ -12,3 +12,16 @@ export function enumNames(enum_: any): string[] {
         (k) => typeof enum_[k] === 'number' || enum_[k] === k || enum_[enum_[k]]?.toString() !== k
     );
 }
+
+export const cropNames = [
+    'Cactus',
+    'Carrot',
+    'Cocoa beans',
+    'Melon',
+    'Mushroom',
+    'Nether wart',
+    'Potato',
+    'Pumpkin',
+    'Sugar cane',
+    'Wheat',
+];
