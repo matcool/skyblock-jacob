@@ -59,7 +59,7 @@ export default defineComponent({
                 sentNotification.value = true;
                 new Notification('A contest is about to start!', {
                     body: `In less than 3 minutes. Crops: ${props.event.crops
-                        .map((_, i) => cropNames[i])
+                        .map(crop => cropNames[crop])
                         .join(', ')}`,
                 });
             }
