@@ -7,7 +7,7 @@
             'bg-yellow-200': !active && soon,
         }"
     >
-        <p class="text-lg mb-1">{{ active ? 'Ends' : 'Starts' }} in: {{ timer }}</p>
+        <p class="text-lg mb-1">{{ timer }}</p>
         <div class="flex justify-around">
             <img
                 v-for="(crop, i) in event.crops"
@@ -23,7 +23,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, computed, watchEffect } from 'vue';
 import { JacobEvent, Crop } from '../types';
-import { formatTime, cropNames } from '../utils';
+import { formatTime, cropNames, dateTo12Hour, padNumber } from '../utils';
 import icons from '../icons';
 import { notifsEnabled } from '../notifications';
 
@@ -34,6 +34,8 @@ export default defineComponent({
             type: Object as PropType<JacobEvent>,
             required: true,
         },
+        absoluteTime: Boolean,
+        twelveHour: Boolean,
     },
     emits: ['event-over'],
     setup(props, ctx) {
@@ -59,14 +61,42 @@ export default defineComponent({
                 sentNotification.value = true;
                 new Notification('A contest is about to start!', {
                     body: `In less than 3 minutes. Crops: ${props.event.crops
-                        .map(crop => cropNames[crop])
+                        .map((crop) => cropNames[crop])
                         .join(', ')}`,
                 });
             }
         });
 
+        const eventDate = ref(new Date(props.event.timestamp));
+
         const timer = computed(() => {
-            return formatTime(active.value ? 20 * 60 * 1000 + diff.value : diff.value);
+            if (!props.absoluteTime || diff.value < 10 * 60 * 1000) {
+                const countdown = formatTime(
+                    active.value ? 20 * 60 * 1000 + diff.value : diff.value
+                );
+                return `${active.value ? 'Ends' : 'Starts'} in ${countdown}`;
+            } else {
+                const now = new Date();
+                let time = props.twelveHour
+                    ? dateTo12Hour(eventDate.value)
+                    : `${padNumber(eventDate.value.getHours(), 2)}:${padNumber(
+                          eventDate.value.getMinutes(),
+                          2
+                      )}`;
+                let day;
+                const dayDiff = eventDate.value.getDay() - now.getDay();
+                switch (dayDiff) {
+                    case 0:
+                        day = 'at';
+                        break;
+                    case 1:
+                        day = 'tomorrow at';
+                        break;
+                    default:
+                        day = `in ${dayDiff} days at`;
+                }
+                return `Starts ${day} ${time}`;
+            }
         });
         // in 5 minutes
         const soon = computed(() => !active.value && diff.value < 5 * 60 * 1000 && !verySoon.value);

@@ -25,3 +25,18 @@ export const cropNames = [
     'Sugar cane',
     'Wheat',
 ];
+
+export function padNumber(n: number, zeros: number): string {
+    if (!!String.prototype.padStart) {
+        return n.toString().padStart(zeros, '0');
+    } else {
+        return '0'.repeat(zeros - n.toString().length) + n.toString();
+    }
+}
+
+export function dateTo12Hour(date: Date): string {
+    let hour = date.getHours() % 12;
+    if (hour === 0) hour = 12;
+    const m = date.getHours() >= 12 ? 'PM' : 'AM';
+    return `${padNumber(hour, 2)}:${padNumber(date.getMinutes(), 2)} ${m}`;
+}

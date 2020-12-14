@@ -9,9 +9,20 @@
                     >Source code</a
                 >
             </div>
-            <div class="flex items-center text-lg my-2">
+            <div class="flex items-center text-lg mt-2 mb-1">
                 <input type="checkbox" class="w-4 h-4" v-model="notifsEnabled" />
-                <span class="ml-2">Enable notifications</span>
+                <span class="ml-1">Enable notifications</span>
+            </div>
+            <div class="flex items-center text-lg mt-1 mb-2">
+                <input type="checkbox" class="w-4 h-4" v-model="absoluteTime" />
+                <span class="ml-1">Absolute time</span>
+                <input
+                    type="checkbox"
+                    class="ml-2 w-4 h-4"
+                    v-model="twelveHour"
+                    :disabled="!absoluteTime"
+                />
+                <span class="ml-1" :class="{ 'opacity-50': !absoluteTime }">12 hour</span>
             </div>
             <div class="bg-gray-200 flex flex-wrap p-2 rounded-lg mt-2 select-none">
                 <div
@@ -30,6 +41,8 @@
             <event-card
                 v-for="(event, i) in filteredEvents"
                 :event="event"
+                :absoluteTime="absoluteTime"
+                :twelveHour="twelveHour"
                 :key="event.timestamp"
                 @event-over="events.splice(i, 1)"
             ></event-card>
@@ -46,7 +59,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, ref, watchEffect } from 'vue';
+import { defineComponent, reactive, computed, ref, watchEffect, watch } from 'vue';
 import EventCard from './components/EventCard.vue';
 import { JacobEvent, Crop } from './types';
 import axios from 'axios';
@@ -72,12 +85,21 @@ export default defineComponent({
                 return event.crops.some((value) => selected[value]);
             });
         });
+
+        const absoluteTime = ref(localStorage.getItem('absoluteTime') === 'true');
+        const twelveHour = ref(localStorage.getItem('twelveHour') === 'true');
+        watchEffect(() => {
+            localStorage.setItem('absoluteTime', absoluteTime.value.toString());
+            localStorage.setItem('twelveHour', twelveHour.value.toString());
+        });
         return {
             events,
             filteredEvents,
             cropNames,
             selected,
             notifsEnabled,
+            absoluteTime,
+            twelveHour,
         };
     },
 });
