@@ -10,19 +10,25 @@
                 >
             </div>
             <div class="flex items-center text-lg mt-2 mb-1">
-                <input type="checkbox" class="w-4 h-4" v-model="notifsEnabled" />
-                <span class="ml-1">Enable notifications</span>
+                <label>
+                    <input type="checkbox" class="w-4 h-4" v-model="notifsEnabled" />
+                    Enable notifications
+                </label>
             </div>
             <div class="flex items-center text-lg mt-1 mb-2">
-                <input type="checkbox" class="w-4 h-4" v-model="absoluteTime" />
-                <span class="ml-1">Absolute time</span>
-                <input
-                    type="checkbox"
-                    class="ml-2 w-4 h-4"
-                    v-model="twelveHour"
-                    :disabled="!absoluteTime"
-                />
-                <span class="ml-1" :class="{ 'opacity-50': !absoluteTime }">12 hour</span>
+                <label>
+                    <input type="checkbox" class="w-4 h-4" v-model="absoluteTime" />
+                    Absolute time
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        class="ml-2 w-4 h-4"
+                        v-model="twelveHour"
+                        :disabled="!absoluteTime"
+                    />
+                    <span class="ml-1" :class="{ 'opacity-50': !absoluteTime }">12 hour</span>
+                </label>
             </div>
             <div class="bg-gray-200 flex flex-wrap p-2 rounded-lg mt-2 select-none">
                 <div
@@ -46,8 +52,11 @@
                 :key="event.timestamp"
                 @event-over="events.splice(i, 1)"
             ></event-card>
-            <div v-if="events.length === 0" class="mt-5 text-xl text-gray-700 italic">
-                Uh oh, the API returned no events. If this persists, go complain in the
+            <div v-if="events.length === 0" class="mt-5 text-xl text-gray-700 italic text-center">
+                Uh oh, the API returned no events.
+                <span class="text-base">Was it just new years? If so just wait a bit.</span>
+                <br />
+                If this persists, go complain in the
                 <a
                     class="hover:underline text-gray-900"
                     href="https://hypixel.net/threads/website-jacobs-farming-contests-tracker.3562658/"
