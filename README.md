@@ -1,6 +1,6 @@
 a tracker for hypixel skyblock jacob contests
 
-## Usage
+## Running locally
 First build the client
 ```bash
 # on the client/ folder
