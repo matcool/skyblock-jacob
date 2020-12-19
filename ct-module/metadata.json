@@ -1,0 +1,8 @@
+{
+  "name": "JacobEvent",
+  "entry": "main.js",
+  "description": "good luck using this",
+  "version": "1.0.0",
+  "author": "matcool",
+  "requires": ["requestV2"]
+}
