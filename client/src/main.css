@@ -7,5 +7,7 @@
 .img-icon {
     @apply w-16 h-16;
     image-rendering: pixelated;
+    /* Firefox support for pixelated image upscaling */
+    image-rendering: crisp-edges;
     filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.2));
 }
