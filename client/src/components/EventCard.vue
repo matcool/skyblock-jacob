@@ -84,7 +84,8 @@ export default defineComponent({
                           2
                       )}`;
                 let day;
-                const dayDiff = eventDate.value.getDay() - now.getDay();
+                let dayDiff = eventDate.value.getDay() - now.getDay();
+                if (dayDiff < 0) dayDiff += 7;
                 switch (dayDiff) {
                     case 0:
                         day = 'at';
