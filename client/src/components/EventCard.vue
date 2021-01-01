@@ -84,7 +84,7 @@ export default defineComponent({
                           2
                       )}`;
                 let day;
-                const dayDiff = eventDate.value.getDay() - now.getDay();
+                const dayDiff = Math.floor((props.event.timestamp - now.getTime()) / 1000 / 60 / 60 / 24);
                 switch (dayDiff) {
                     case 0:
                         day = 'at';
