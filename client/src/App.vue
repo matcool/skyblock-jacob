@@ -84,7 +84,8 @@ export default defineComponent({
         axios.get('/api/upcomingEvents').then((response) => {
             events.push(...response.data);
         });
-        const selected = reactive(Array(cropNames.length).fill(false));
+        const storedSelection = localStorage.getItem('selected');
+        const selected = reactive(storedSelection ? JSON.parse(storedSelection) : Array(cropNames.length).fill(false));
         const filteredEvents = computed(() => {
             // if nothing is selected, then ignore
             if (!selected.some((i) => i)) {
@@ -100,6 +101,7 @@ export default defineComponent({
         watchEffect(() => {
             localStorage.setItem('absoluteTime', absoluteTime.value.toString());
             localStorage.setItem('twelveHour', twelveHour.value.toString());
+            localStorage.setItem('selected', JSON.stringify(selected));
         });
         return {
             events,
