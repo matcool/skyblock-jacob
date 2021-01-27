@@ -8,6 +8,7 @@
     },
     "dependencies": {
         "axios": "^0.21.0",
+        "darkmode-js": "^1.5.7",
         "tailwindcss": "^1.7.3",
         "vue": "^3.0.2"
     },
